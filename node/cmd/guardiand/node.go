@@ -284,9 +284,9 @@ func runNode(cmd *cobra.Command, args []string) {
 	readiness.RegisterComponent(common.ReadinessPolygonSyncing)
 	readiness.RegisterComponent(common.ReadinessAvalancheSyncing)
 	readiness.RegisterComponent(common.ReadinessOasisSyncing)
-	readiness.RegisterComponent(common.ReadinessFantomSyncing)
 	if *testnetMode {
 		readiness.RegisterComponent(common.ReadinessEthRopstenSyncing)
+		readiness.RegisterComponent(common.ReadinessFantomSyncing)
 	}
 
 	if *statusAddr != "" {
@@ -371,9 +371,6 @@ func runNode(cmd *cobra.Command, args []string) {
 	if *oasisRPC == "" {
 		logger.Fatal("Please specify --oasisRPC")
 	}
-	if *fantomRPC == "" {
-		logger.Fatal("Please specify --fantomRPC")
-	}
 	if *testnetMode {
 		if *ethRopstenRPC == "" {
 			logger.Fatal("Please specify --ethRopstenRPC")
@@ -381,12 +378,24 @@ func runNode(cmd *cobra.Command, args []string) {
 		if *ethRopstenContract == "" {
 			logger.Fatal("Please specify --ethRopstenContract")
 		}
+		if *fantomRPC == "" {
+			logger.Fatal("Please specify --fantomRPC")
+		}
+		if *fantomContract == "" {
+			logger.Fatal("Please specify --fantomContract")
+		}
 	} else {
 		if *ethRopstenRPC != "" {
 			logger.Fatal("Please do not specify --ethRopstenRPC in non-testnet mode")
 		}
 		if *ethRopstenContract != "" {
 			logger.Fatal("Please do not specify --ethRopstenContract in non-testnet mode")
+		}
+		if *fantomRPC == "" {
+			logger.Fatal("Please do not specify --fantomRPC in non-testnet mode")
+		}
+		if *fantomContract == "" {
+			logger.Fatal("Please do not specify --fantomContract in non-testnet mode")
 		}
 	}
 	if *nodeName == "" {
