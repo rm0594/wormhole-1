@@ -673,13 +673,13 @@ func runNode(cmd *cobra.Command, args []string) {
 			ethereum.NewEthWatcher(*oasisRPC, oasisContractAddr, "oasis", common.ReadinessOasisSyncing, vaa.ChainIDOasis, lockC, nil, 1).Run); err != nil {
 			return err
 		}
-		if err := supervisor.Run(ctx, "fantomwatch",
-			ethereum.NewEthWatcher(*fantomRPC, fantomContractAddr, "fantom", common.ReadinessFantomSyncing, vaa.ChainIDFantom, lockC, nil, 1).Run); err != nil {
-			return err
-		}
 		if *testnetMode {
 			if err := supervisor.Run(ctx, "ethropstenwatch",
 				ethereum.NewEthWatcher(*ethRopstenRPC, ethRopstenContractAddr, "ethropsten", common.ReadinessEthRopstenSyncing, vaa.ChainIDEthereumRopsten, lockC, setC, 1).Run); err != nil {
+				return err
+			}
+			if err := supervisor.Run(ctx, "fantomwatch",
+				ethereum.NewEthWatcher(*fantomRPC, fantomContractAddr, "fantom", common.ReadinessFantomSyncing, vaa.ChainIDFantom, lockC, nil, 1).Run); err != nil {
 				return err
 			}
 		}
